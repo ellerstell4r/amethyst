@@ -154,4 +154,9 @@ fs_api.makeDirectory = function(p)
     return pr.makeDirectory(c)
 end
 
+fs_api.remove = function(p)
+    local pr, c = getProxy(p)
+    if pr then return pr.remove(c) end
+end
+
 return fs_api
