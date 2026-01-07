@@ -2,6 +2,16 @@ local term = amethyst.api.term
 local fs = amethyst.api.fs
 local kbd = amethyst.api.kbd
 
+local function remove(p)
+    p = fs.resolve(p)
+    if fs.isDirectory(p) then
+        for _, i in ipairs(fs.list(p)) do
+            remove(fs.concat(p, i))
+        end
+    end
+    fs.remove(p)
+end
+
 term.write(" --- Amethyst OS Installer ---\n\n")
 local devices = fs.getDevices()
 for _, dev in ipairs(devices) do
@@ -16,6 +26,9 @@ term.write("Username: ")
 local user = kbd.readLine()
 term.write("Password: ")
 local pass = kbd.readLine()
+
+term.write("\nWiping target disk...")
+remove(dest)
 
 term.write("\nPreparing directories...\n")
 local dirs = {
