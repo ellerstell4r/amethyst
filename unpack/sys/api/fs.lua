@@ -164,4 +164,10 @@ fs_api.makeDirectory = function(p)
     return pr.makeDirectory(c)
 end
 
+fs_api.remove = function(p)
+    if is_protected(p) then return nil, "access denied" end
+    local pr, c = getProxy(p)
+    return pr and pr.remove(c)
+end
+
 return fs_api
